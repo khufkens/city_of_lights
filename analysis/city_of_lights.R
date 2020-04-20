@@ -48,18 +48,16 @@ theme_map <- function(...) {
 
 # labels
 df <- data.frame(
-  label = "Cummulative night light intensity (2013 - 2019) 
-  as measured by the VIIRS sensors on the Suomi satellite to 
-  the north of the Falklands / Malvinas, showing nighttime squid
-  fishing with flood lights. High values indicate high vessel density
-  and activity.
+  label = "Cummulative night light intensity (2013 - 2019),
+  to the north of the Falklands / Malvinas as measured by the VIIRS sensors
+  on the Suomi satellite, showing nighttime squid fishing with flood lights.
+  High values indicate high vessel density and activity.
   
   Flood lights on fishing vessels attract plankton and other fish
   on which the squid feed. Currents and upwelling along the shelfbreak
   to the north and east of the islands make this a fertile ground with
-  abundant nutrients for squid and other species. The fishing patterns
-  therefore track the location of these currents, and the location of
-  the shelfbreak.
+  abundant nutrients for squids. The fishing patterns therefore track the 
+  location of these currents and the location of the shelfbreak.
   
   Sadly, a lot of these fishing vessels are operated by
   East Asian companies, which take large liberties with respect to labour laws.
@@ -109,5 +107,5 @@ p2 <- p + geom_textbox(
   fill = "#222222",
   width = unit(0.25, "npc"))
 
-ggsave(filename = "city_of_lights.png", width = 13)
+ggsave(filename = "city_of_lights.png", width = 13, height = 9)
 #knitr::plot_crop("test.pdf")
