@@ -12,7 +12,7 @@ library(ggtext)
 
 # load data (will take a while)
 if(!exists("land")){
-  source("analysis/load_data.R")
+  source("analysis/load_data_peru.R")
 }
 
 # set colour theme
@@ -46,42 +46,13 @@ theme_map <- function(...) {
     ) 
 }
 
-# labels
-df <- data.frame(
-  label = "Cummulative night light intensity (2013 - 2019),
-  to the north of the Falklands / Malvinas as measured by the VIIRS sensors
-  on the Suomi satellite, showing nighttime squid fishing with flood lights.
-  High values indicate high vessel density and activity.
-  
-  Flood lights on fishing vessels attract plankton and other fish
-  on which the squid feed. Currents and upwelling along the shelfbreak
-  to the north and east of the islands make this a fertile ground with
-  abundant nutrients for squids. The fishing patterns therefore track the 
-  location of these currents and the location of the shelfbreak.
-  
-  Sadly, a lot of these fishing vessels are operated by
-  East Asian companies, which take large liberties with respect to labour laws.
-  To operate with inpunity toward both labour and fishery laws vessels consistently
-  avoid both territorial and continuous waters
-  (dotted line) around the Falklands / Malvinas. The disputed state
-  of these islands, and their surrounding waters, further foster lawlessness.
-  ",
-  x = -49.5,
-  y = -50,
-  hjust = 1,
-  vjust = 0,
-  orientation = "upright",
-  color = "#C3C3C3",
-  fill = col_water
-)
-
 p <- ggplot() +
   geom_tile(data = r_df, aes(x=x,y=y,fill= val)) +
   scale_fill_viridis_c(
     option = "B",
     name = "light intensity",
     labels = c("low","high"),
-    breaks = c(4, 7)) +
+    breaks = c(2, 7)) +
   geom_sf(data = land, fill = col_land, color = NA) +
   guides(fill = guide_colourbar(title.position="top", title.hjust = 0.5)) +
   geom_sf(data = minor_islands, fill = col_land, color = NA) +
@@ -89,22 +60,14 @@ p <- ggplot() +
   geom_sf(data = rivers, fill = NA, color = col_water) +
   geom_sf(data = lakes, fill = col_water, color = NA) +
   geom_sf(data = roads, fill = NA, color = col_road) +
-  geom_sf(data = falklands_buffer_44, fill = NA, color = col_road, lty = 3) +
+  geom_sf(data = land_buffer, fill = NA, color = col_road, lty = 3) +
   geom_sf(data = country_boundary, fill = NA, color = col_road, lwd = 1.2) +
   geom_sf(data = country_boundary, fill = NA, color = col_boundary) +
-  coord_sf(xlim = c(-75, -45), ylim = c(-56,-44)) +
+  coord_sf(ylim = c(-20,-5),xlim = c(-90,-67)) +
   labs(
-    title = "The City of Lights",
-    subtitle = "Fishing for squid at the edge of the world",
+    title = "Vessel Lights - Peru",
+    subtitle = "Illuminating fishing activity with onboard flood lights",
     caption = "graphics & analysis by @koen_hufkens") +
   theme_map()
 
-p2 <- p + geom_textbox(
-  data = df,
-  aes(x, y, label = label),
-  color = "#C3C3C3",
-  fill = "#222222",
-  width = unit(0.25, "npc"))
-
-ggsave(filename = "city_of_lights.png", width = 13, height = 9)
-#knitr::plot_crop("test.pdf")
+ggsave(filename = "city_of_lights_peru.png", height = 9)
